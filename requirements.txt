@@ -1,0 +1,17 @@
+pandas
+polars
+numpy
+lightgbm
+joblib
+grpcio
+pyarrow
+protobuf
+fastapi
+uvicorn[standard]
+gunicorn
+matplotlib
+seaborn
+scikit-learn
+grpcio
+pyarrow
+protobuf

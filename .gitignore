@@ -1,0 +1,35 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Data & models
+train/
+*.parquet
+*.csv
+models/
+submission*.csv
+submission.parquet
+result.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Misc
+.env
+.kaggle/
