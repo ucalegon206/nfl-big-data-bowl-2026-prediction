@@ -1,0 +1,56 @@
+name: Publish for_kaggle dataset
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Prepare for_kaggle (make zip)
+        run: make prepare-for-kaggle
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install kaggle CLI
+        run: pip install --upgrade pip && pip install kaggle
+
+      - name: Configure Kaggle credentials
+        env:
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+        run: |
+          mkdir -p ~/.kaggle
+          cat > ~/.kaggle/kaggle.json <<EOF
+          {"username":"${KAGGLE_USERNAME}","key":"${KAGGLE_KEY}"}
+          EOF
+          chmod 600 ~/.kaggle/kaggle.json
+          ls -la ~/.kaggle
+
+      - name: Publish dataset (create or update)
+        env:
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+        run: |
+          set -e
+          ZIP=for_kaggle.zip
+          if [ ! -f "$ZIP" ]; then
+            echo "Zip archive $ZIP not found" >&2
+            exit 1
+          fi
+          # Attempt to create dataset; if it already exists, create a new version
+          DATASET_OWNER=${KAGGLE_USERNAME}
+          DATASET_SLUG="for_kaggle"
+          # Try to create (will fail if exists)
+          if kaggle datasets list -u "$DATASET_OWNER" | grep -q "$DATASET_SLUG"; then
+            echo "Dataset found, creating new version..."
+            kaggle datasets version -p for_kaggle -m "Automated update from CI" -r zip || true
+          else
+            echo "Dataset not found, creating new dataset..."
+            kaggle datasets create -p for_kaggle -u "$DATASET_OWNER" -r zip -m "Initial upload from CI" || true
+          fi
