@@ -1,0 +1,23 @@
+[{"stream_name":"stderr","time":8.788473256,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":8.788571527,"data":"  File \"\u003cstring\u003e\", line 1, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":8.788581033,"data":"  File \"/usr/local/lib/python3.11/dist-packages/papermill/execute.py\", line 113, in execute_notebook\n"}
+,{"stream_name":"stderr","time":8.788613266,"data":"    kernel_name = papermill_engines.nb_kernel_name(engine_name=engine_name, nb=nb, name=kernel_name)\n"}
+,{"stream_name":"stderr","time":8.788705758,"data":"                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":8.788724348,"data":"  File \"/usr/local/lib/python3.11/dist-packages/papermill/engines.py\", line 52, in nb_kernel_name\n"}
+,{"stream_name":"stderr","time":8.788817116,"data":"    return self.get_engine(engine_name).nb_kernel_name(nb, name)\n"}
+,{"stream_name":"stderr","time":8.789050694,"data":"           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":8.789069558,"data":"  File \"/usr/local/lib/python3.11/dist-packages/papermill/engines.py\", line 385, in nb_kernel_name\n"}
+,{"stream_name":"stderr","time":8.789094476,"data":"    return nb_kernel_name(nb, name)\n"}
+,{"stream_name":"stderr","time":8.789118785,"data":"           ^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":8.7891267,"data":"  File \"/usr/local/lib/python3.11/dist-packages/papermill/utils.py\", line 52, in nb_kernel_name\n"}
+,{"stream_name":"stderr","time":8.789318461,"data":"    raise ValueError(\"No kernel name found in notebook and no override provided.\")\n"}
+,{"stream_name":"stderr","time":8.789332894,"data":"ValueError: No kernel name found in notebook and no override provided.\n"}
+,{"stream_name":"stderr","time":12.783266539,"data":"/usr/local/lib/python3.11/dist-packages/traitlets/traitlets.py:2915: FutureWarning: --Exporter.preprocessors=[\"remove_papermill_header.RemovePapermillHeader\"] for containers is deprecated in traitlets 5.0. You can pass `--Exporter.preprocessors item` ... multiple times to add items to a list.\n"}
+,{"stream_name":"stderr","time":12.783319233,"data":"  warn(\n"}
+,{"stream_name":"stderr","time":12.833334966,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":13.174210813,"data":"[NbConvertApp] Writing 15172 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":16.418855076,"data":"/usr/local/lib/python3.11/dist-packages/traitlets/traitlets.py:2915: FutureWarning: --Exporter.preprocessors=[\"nbconvert.preprocessors.ExtractOutputPreprocessor\"] for containers is deprecated in traitlets 5.0. You can pass `--Exporter.preprocessors item` ... multiple times to add items to a list.\n"}
+,{"stream_name":"stderr","time":16.418903962,"data":"  warn(\n"}
+,{"stream_name":"stderr","time":16.453316801,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":17.00344065,"data":"[NbConvertApp] Writing 320723 bytes to __results__.html\n"}
+]
