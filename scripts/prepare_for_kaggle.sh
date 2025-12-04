@@ -37,6 +37,15 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+echo "Running model integrity tests..."
+if ! "$REPO_ROOT/.venv/bin/python" -m pytest "$REPO_ROOT/tests/test_model_integrity.py" -v; then
+  echo "ERROR: Model integrity tests failed!"
+  echo "Cannot prepare for Kaggle with a broken model."
+  exit 1
+fi
+echo "✓ Model integrity tests passed"
+echo ""
+
 echo "Preparing for_kaggle dataset in: $OUT"
 rm -rf "$OUT"
 mkdir -p "$OUT"
@@ -54,8 +63,63 @@ copy_if_exists(){
   fi
 }
 
-# Copy model
-copy_if_exists "$REPO_ROOT/models/best_model.pkl" "$OUT/models/best_model.pkl"
+# Copy model with NEW filename pattern to defeat Kaggle caching
+# Use nfl_model_v{timestamp}.pkl instead of best_model_{timestamp}.pkl
+TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+READABLE_TS=$(date +"%Y-%m-%d %H:%M:%S")
+if [ -f "$REPO_ROOT/models/best_model.pkl" ]; then
+  mkdir -p "$OUT/models"
+  
+  # Create new versioned model with DIFFERENT name pattern
+  VERSIONED_MODEL="$OUT/models/nfl_model_v${TIMESTAMP}.pkl"
+  cp -a "$REPO_ROOT/models/best_model.pkl" "$VERSIONED_MODEL"
+  echo "copied (versioned): $REPO_ROOT/models/best_model.pkl -> $VERSIONED_MODEL"
+  echo "✓ Using versioned model: nfl_model_v${TIMESTAMP}.pkl"
+  echo "✓ Timestamp: $READABLE_TS"
+  echo "✓ NEW naming pattern to defeat Kaggle caching!"
+  
+  # Create metadata file for the model
+  MODEL_METADATA="$OUT/models/MODEL_METADATA.txt"
+  cat > "$MODEL_METADATA" << EOF
+Model Metadata
+==============
+Filename: nfl_model_v${TIMESTAMP}.pkl
+Created: $READABLE_TS
+Timestamp ID: ${TIMESTAMP}
+
+This model package contains:
+- Two HistGradientBoostingRegressor models (x and y coordinates)
+- random_state set to 42 (integer, not RandomState object)
+- Feature columns list for inference
+- Player position values for feature engineering
+
+Deployment Notes:
+- Model uses nfl_model_v{timestamp}.pkl naming to defeat Kaggle caching
+- When uploading to Kaggle, include this metadata in dataset
+- Ensure NumPy compatibility by checking random_state is integer 42
+
+See KAGGLE_SUBMIT.md for submission instructions.
+EOF
+  echo "✓ Created model metadata at: $MODEL_METADATA"
+  
+  # Copy the last 3 existing versioned models from models/ directory (if they exist)
+  # Check both old and new patterns
+  EXISTING_VERSIONED=$(ls -t "$REPO_ROOT/models"/nfl_model_v[0-9]*.pkl "$REPO_ROOT/models"/best_model_[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]_[0-9][0-9][0-9][0-9][0-9][0-9].pkl 2>/dev/null | head -3 || true)
+  if [ -n "$EXISTING_VERSIONED" ]; then
+    echo "Including previous versioned models:"
+    for prev_model in $EXISTING_VERSIONED; do
+      prev_basename=$(basename "$prev_model")
+      # Don't duplicate if we just created it
+      if [ "$prev_basename" != "nfl_model_v${TIMESTAMP}.pkl" ]; then
+        cp -a "$prev_model" "$OUT/models/$prev_basename"
+        echo "  copied: $prev_basename"
+      fi
+    done
+  fi
+else
+  echo "ERROR: models/best_model.pkl not found"
+  exit 1
+fi
 
 # Copy test files
 copy_if_exists "$REPO_ROOT/test.csv" "$OUT/test.csv"
@@ -98,4 +162,5 @@ if [ "$COMMIT" = true ]; then
 fi
 
 echo "Done. for_kaggle content:" 
-ls -la "$OUT" || true
+ls -la "$OUT" 2>/dev/null || echo "  (directory listing skipped)"
+exit 0

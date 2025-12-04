@@ -1,0 +1,23 @@
+{
+  "id": "blazelaserblazer/nfl-model-v20251204-114946",
+  "licenses": [
+    {
+      "name": "CC0-1.0"
+    }
+  ],
+  "resources": [
+    {
+      "path": "for_kaggle.zip",
+      "description": "NFL BDB 2026 inference model package with submission notebook"
+    }
+  ],
+  "title": "nfl-model-v20251204-114946",
+  "subtitle": "NFL position prediction model - 2025-12-04 11:49:46",
+  "keywords": [
+    "nfl",
+    "big-data-bowl",
+    "prediction",
+    "inference"
+  ],
+  "collab_sources": []
+}

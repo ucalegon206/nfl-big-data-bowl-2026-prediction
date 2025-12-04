@@ -188,7 +188,13 @@ def save_model(
     merged_clean: pd.DataFrame,
     output_path: Path
 ):
-    """Save trained models and metadata."""
+    """Save trained models and metadata.
+    
+    Saves to both the specified output path and a timestamped version
+    for version tracking and cache-busting on Kaggle.
+    """
+    from datetime import datetime
+    
     meta = {
         'feature_columns': feat_cols,
         'models': {'x': mx, 'y': my},
@@ -197,10 +203,27 @@ def save_model(
     }
     
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    joblib.dump(meta, output_path)
     
-    print(f'\nModel saved to {output_path}')
-    print(f'Model size: {output_path.stat().st_size / 1024 / 1024:.2f} MB')
+    # Save to specified path (e.g., best_model.pkl)
+    joblib.dump(meta, output_path)
+    print(f'\n✓ Model saved to {output_path}')
+    print(f'  Model size: {output_path.stat().st_size / 1024 / 1024:.2f} MB')
+    
+    # Also save a timestamped version for version tracking
+    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    versioned_path = output_path.parent / f"{output_path.stem}_{timestamp}{output_path.suffix}"
+    joblib.dump(meta, versioned_path)
+    print(f'✓ Versioned copy saved to {versioned_path}')
+    print(f'  (This helps avoid Kaggle caching issues)')
+    
+    # Clean up old versioned models, keeping only the last 5
+    pattern = f"{output_path.stem}_[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]_[0-9][0-9][0-9][0-9][0-9][0-9]{output_path.suffix}"
+    old_versions = sorted(output_path.parent.glob(pattern), reverse=True)
+    if len(old_versions) > 5:
+        for old_file in old_versions[5:]:
+            print(f'  Removing old version: {old_file.name}')
+            old_file.unlink()
+    print(f'  Keeping {min(len(old_versions), 5)} most recent versioned models')
 
 
 def main():
