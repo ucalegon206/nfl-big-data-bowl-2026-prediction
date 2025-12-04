@@ -18,7 +18,6 @@ Options:
 This script collects the minimal files required to run the inference notebook on Kaggle
 and places them in the `for_kaggle` directory at the repository root (or creates a zip).
 Files copied:
- - models/best_model.pkl
  - test.csv, test_input.csv
  - scripts/ (all files)
  - features.py
@@ -46,6 +45,11 @@ fi
 echo "✓ Model integrity tests passed"
 echo ""
 
+echo "Cleaning up old models in models/ directory..."
+rm -f "$REPO_ROOT/models"/nfl_model_v[0-9]*.pkl
+echo "✓ Removed old model versions"
+echo ""
+
 echo "Preparing for_kaggle dataset in: $OUT"
 rm -rf "$OUT"
 mkdir -p "$OUT"
@@ -63,20 +67,16 @@ copy_if_exists(){
   fi
 }
 
-# Copy model with NEW filename pattern to defeat Kaggle caching
-# Use nfl_model_v{timestamp}.pkl instead of best_model_{timestamp}.pkl
+# Copy model with versioned filename pattern
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 READABLE_TS=$(date +"%Y-%m-%d %H:%M:%S")
 if [ -f "$REPO_ROOT/models/best_model.pkl" ]; then
   mkdir -p "$OUT/models"
   
-  # Create new versioned model with DIFFERENT name pattern
   VERSIONED_MODEL="$OUT/models/nfl_model_v${TIMESTAMP}.pkl"
   cp -a "$REPO_ROOT/models/best_model.pkl" "$VERSIONED_MODEL"
-  echo "copied (versioned): $REPO_ROOT/models/best_model.pkl -> $VERSIONED_MODEL"
-  echo "✓ Using versioned model: nfl_model_v${TIMESTAMP}.pkl"
+  echo "✓ Versioned model: nfl_model_v${TIMESTAMP}.pkl"
   echo "✓ Timestamp: $READABLE_TS"
-  echo "✓ NEW naming pattern to defeat Kaggle caching!"
   
   # Create metadata file for the model
   MODEL_METADATA="$OUT/models/MODEL_METADATA.txt"
@@ -94,28 +94,15 @@ This model package contains:
 - Player position values for feature engineering
 
 Deployment Notes:
-- Model uses nfl_model_v{timestamp}.pkl naming to defeat Kaggle caching
-- When uploading to Kaggle, include this metadata in dataset
+- Model uses nfl_model_v{timestamp}.pkl naming pattern
 - Ensure NumPy compatibility by checking random_state is integer 42
 
 See KAGGLE_SUBMIT.md for submission instructions.
 EOF
   echo "✓ Created model metadata at: $MODEL_METADATA"
   
-  # Copy the last 3 existing versioned models from models/ directory (if they exist)
-  # Check both old and new patterns
-  EXISTING_VERSIONED=$(ls -t "$REPO_ROOT/models"/nfl_model_v[0-9]*.pkl "$REPO_ROOT/models"/best_model_[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]_[0-9][0-9][0-9][0-9][0-9][0-9].pkl 2>/dev/null | head -3 || true)
-  if [ -n "$EXISTING_VERSIONED" ]; then
-    echo "Including previous versioned models:"
-    for prev_model in $EXISTING_VERSIONED; do
-      prev_basename=$(basename "$prev_model")
-      # Don't duplicate if we just created it
-      if [ "$prev_basename" != "nfl_model_v${TIMESTAMP}.pkl" ]; then
-        cp -a "$prev_model" "$OUT/models/$prev_basename"
-        echo "  copied: $prev_basename"
-      fi
-    done
-  fi
+  # Don't copy any previous versioned models - only keep the current one
+  # All old models are cleaned up during training and preparation phases
 else
   echo "ERROR: models/best_model.pkl not found"
   exit 1

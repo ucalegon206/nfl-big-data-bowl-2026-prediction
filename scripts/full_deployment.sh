@@ -120,7 +120,8 @@ log_phase "PHASE 1: Local Build"
 
 log_step "Step 1/11: Cleaning previous artifacts"
 rm -rf "$REPO_ROOT/for_kaggle" "$REPO_ROOT/for_kaggle.zip"
-log_success "Cleaned artifacts"
+rm -f "$REPO_ROOT/models"/nfl_model_v[0-9]*.pkl 2>/dev/null || true
+log_success "Cleaned artifacts and model versions"
 
 log_step "Step 2/11: Running model integrity tests"
 if ! "$REPO_ROOT/.venv/bin/python" -m pytest "$REPO_ROOT/tests/test_model_integrity.py" -q 2>&1 | tail -5; then

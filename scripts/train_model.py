@@ -205,7 +205,7 @@ def save_model(
     
     output_path.parent.mkdir(parents=True, exist_ok=True)
     
-    # Save with NEW versioned naming pattern: nfl_model_v{timestamp}.pkl
+    # Save with versioned naming pattern: nfl_model_v{timestamp}.pkl
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
     versioned_path = output_path.parent / f"nfl_model_v{timestamp}.pkl"
     
@@ -213,7 +213,6 @@ def save_model(
     print(f'\n✓ Model saved to {versioned_path}')
     print(f'  Model size: {versioned_path.stat().st_size / 1024 / 1024:.2f} MB')
     print(f'  Timestamp: {timestamp}')
-    print(f'  ✓ NEW naming pattern (nfl_model_v*) to defeat Kaggle caching!')
     
     # Also save as best_model.pkl for backward compatibility (used by prepare_for_kaggle.sh)
     compat_path = output_path.parent / 'best_model.pkl'
@@ -221,14 +220,18 @@ def save_model(
     print(f'\n✓ Compatibility copy saved to {compat_path}')
     print(f'  (Used by prepare_for_kaggle.sh for packaging)')
     
-    # Clean up old versioned models, keeping only the last 5
+    # Clean up ALL old nfl_model_v* versions, keeping only the one we just created
     pattern = "nfl_model_v[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]_[0-9][0-9][0-9][0-9][0-9][0-9].pkl"
     old_versions = sorted(output_path.parent.glob(pattern), reverse=True)
-    if len(old_versions) > 5:
-        for old_file in old_versions[5:]:
-            print(f'  Removing old version: {old_file.name}')
+    removed_count = 0
+    for old_file in old_versions:
+        if old_file != versioned_path:
             old_file.unlink()
-    print(f'  Keeping {min(len(old_versions), 5)} most recent versioned models')
+            removed_count += 1
+    
+    if removed_count > 0:
+        print(f'\n✓ Cleaned up {removed_count} old nfl_model_v* file(s)')
+    print(f'  Keeping only the current model: {versioned_path.name}')
 
 
 def main():
