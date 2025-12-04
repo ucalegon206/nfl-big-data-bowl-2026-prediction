@@ -86,7 +86,8 @@ def prepare_train_val_split(
     # Sample if dataset is too large
     if len(X_all) > max_rows:
         print(f'Sampling {max_rows} rows for training (from {len(X_all):,})')
-        idx = np.random.RandomState(random_state).choice(len(X_all), size=max_rows, replace=False)
+        rng = np.random.default_rng(random_state)
+        idx = rng.choice(len(X_all), size=max_rows, replace=False)
         X_all = X_all.iloc[idx].reset_index(drop=True)
         y_x = y_x.iloc[idx].reset_index(drop=True)
         y_y = y_y.iloc[idx].reset_index(drop=True)
@@ -204,20 +205,24 @@ def save_model(
     
     output_path.parent.mkdir(parents=True, exist_ok=True)
     
-    # Save to specified path (e.g., best_model.pkl)
-    joblib.dump(meta, output_path)
-    print(f'\n✓ Model saved to {output_path}')
-    print(f'  Model size: {output_path.stat().st_size / 1024 / 1024:.2f} MB')
-    
-    # Also save a timestamped version for version tracking
+    # Save with NEW versioned naming pattern: nfl_model_v{timestamp}.pkl
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-    versioned_path = output_path.parent / f"{output_path.stem}_{timestamp}{output_path.suffix}"
+    versioned_path = output_path.parent / f"nfl_model_v{timestamp}.pkl"
+    
     joblib.dump(meta, versioned_path)
-    print(f'✓ Versioned copy saved to {versioned_path}')
-    print(f'  (This helps avoid Kaggle caching issues)')
+    print(f'\n✓ Model saved to {versioned_path}')
+    print(f'  Model size: {versioned_path.stat().st_size / 1024 / 1024:.2f} MB')
+    print(f'  Timestamp: {timestamp}')
+    print(f'  ✓ NEW naming pattern (nfl_model_v*) to defeat Kaggle caching!')
+    
+    # Also save as best_model.pkl for backward compatibility (used by prepare_for_kaggle.sh)
+    compat_path = output_path.parent / 'best_model.pkl'
+    joblib.dump(meta, compat_path)
+    print(f'\n✓ Compatibility copy saved to {compat_path}')
+    print(f'  (Used by prepare_for_kaggle.sh for packaging)')
     
     # Clean up old versioned models, keeping only the last 5
-    pattern = f"{output_path.stem}_[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]_[0-9][0-9][0-9][0-9][0-9][0-9]{output_path.suffix}"
+    pattern = "nfl_model_v[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]_[0-9][0-9][0-9][0-9][0-9][0-9].pkl"
     old_versions = sorted(output_path.parent.glob(pattern), reverse=True)
     if len(old_versions) > 5:
         for old_file in old_versions[5:]:
@@ -231,8 +236,8 @@ def main():
     parser = argparse.ArgumentParser(description='Train NFL 2026 prediction models')
     parser.add_argument('--max-rows', type=int, default=200_000,
                         help='Maximum rows to use for training (default: 200,000)')
-    parser.add_argument('--output', type=str, default='models/best_model.pkl',
-                        help='Output path for trained model (default: models/best_model.pkl)')
+    parser.add_argument('--output', type=str, default='models/nfl_model.pkl',
+                        help='Output path base for trained model (default: models/nfl_model.pkl)')
     parser.add_argument('--train-dir', type=str, default='train',
                         help='Directory containing training CSV files (default: train)')
     args = parser.parse_args()
