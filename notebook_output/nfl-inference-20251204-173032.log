@@ -1,0 +1,106 @@
+[{"stream_name":"stderr","time":9.919258939,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":9.919331689,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":9.919338594,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":9.91934209,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":10.732667824,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":10.732704525,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":10.732710686,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":10.732748949,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":18.121005588,"data":"\n"}
+,{"stream_name":"stdout","time":18.121061324,"data":"============================================================\n"}
+,{"stream_name":"stdout","time":18.121068962,"data":"LOADING MODEL AND FEATURES\n"}
+,{"stream_name":"stdout","time":18.121074449,"data":"============================================================\n"}
+,{"stream_name":"stdout","time":18.121080109,"data":"Submission Created: 2025-12-05 01:38:42\n"}
+,{"stream_name":"stdout","time":18.121085589,"data":"Submission ID: 20251205_013842\n"}
+,{"stream_name":"stdout","time":18.121091477,"data":"\n"}
+,{"stream_name":"stdout","time":18.121097125,"data":"=== Searching for Model ===\n"}
+,{"stream_name":"stdout","time":18.121103189,"data":"Available folders: ['nfl-big-data-bowl-2026-prediction', 'nfl-model-v20251204-173032']\n"}
+,{"stream_name":"stdout","time":18.121109392,"data":"POLICY: Only accepting nfl_model_v*.pkl (NEW pattern)\n"}
+,{"stream_name":"stdout","time":18.121115311,"data":"        Rejecting best_model_*.pkl (OLD pattern with NumPy issues)\n"}
+,{"stream_name":"stdout","time":18.121121548,"data":"  Skipping competition folder: nfl-big-data-bowl-2026-prediction\n"}
+,{"stream_name":"stdout","time":18.121125989,"data":"  Checking dataset: nfl-model-v20251204-173032\n"}
+,{"stream_name":"stdout","time":18.121129732,"data":"✓ Found model in: /kaggle/input/nfl-model-v20251204-173032\n"}
+,{"stream_name":"stdout","time":18.121151238,"data":"  Model at: /kaggle/input/nfl-model-v20251204-173032/for_kaggle/for_kaggle/models/nfl_model_v20251204_173032.pkl\n"}
+,{"stream_name":"stdout","time":18.121156517,"data":"\n"}
+,{"stream_name":"stdout","time":18.121162157,"data":"Searching for features.py in /kaggle/input\n"}
+,{"stream_name":"stdout","time":18.121169224,"data":"  Checking model location: nfl-model-v20251204-173032\n"}
+,{"stream_name":"stdout","time":18.121175014,"data":"✓ Found features.py with model at: /kaggle/input/nfl-model-v20251204-173032/features.py\n"}
+,{"stream_name":"stdout","time":18.121181074,"data":"\n"}
+,{"stream_name":"stdout","time":18.121186418,"data":"✓ Loading features from: /kaggle/input/nfl-model-v20251204-173032/features.py\n"}
+,{"stream_name":"stdout","time":18.121192479,"data":"✓ Loading model from: /kaggle/input/nfl-model-v20251204-173032/for_kaggle/for_kaggle/models/nfl_model_v20251204_173032.pkl\n"}
+,{"stream_name":"stderr","time":20.968547306,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":20.968580925,"data":"  File \"\u003cstring\u003e\", line 1, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":20.9685892,"data":"  File \"/usr/local/lib/python3.11/dist-packages/papermill/execute.py\", line 131, in execute_notebook\n"}
+,{"stream_name":"stderr","time":20.96873724,"data":"    raise_for_execution_errors(nb, output_path)\n"}
+,{"stream_name":"stderr","time":20.969277755,"data":"  File \"/usr/local/lib/python3.11/dist-packages/papermill/execute.py\", line 251, in raise_for_execution_errors\n"}
+,{"stream_name":"stderr","time":20.969299105,"data":"    raise error\n"}
+,{"stream_name":"stderr","time":20.969515365,"data":"papermill.exceptions.PapermillExecutionError: \n"}
+,{"stream_name":"stderr","time":20.969524207,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":20.969528635,"data":"Exception encountered at \"In [1]\":\n"}
+,{"stream_name":"stderr","time":20.969533995,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":20.969538842,"data":"GatewayRuntimeError                       Traceback (most recent call last)\n"}
+,{"stream_name":"stderr","time":20.969544225,"data":"/tmp/ipykernel_14/2286654285.py in \u003ccell line: 0\u003e()\n"}
+,{"stream_name":"stderr","time":20.969549858,"data":"    303 else:\n"}
+,{"stream_name":"stderr","time":20.969554848,"data":"    304     # Provide path to published public competition files for local gateway\n"}
+,{"stream_name":"stderr","time":20.96955928,"data":"--\u003e 305     inference_server.run_local_gateway(('/kaggle/input/nfl-big-data-bowl-2026-prediction/',))\n"}
+,{"stream_name":"stderr","time":20.969564336,"data":"\n"}
+,{"stream_name":"stderr","time":20.96956914,"data":"/kaggle/input/nfl-big-data-bowl-2026-prediction/kaggle_evaluation/core/templates.py in run_local_gateway(self, data_paths, file_share_dir, *args, **kwargs)\n"}
+,{"stream_name":"stderr","time":20.969574487,"data":"    106             self.gateway.run()\n"}
+,{"stream_name":"stderr","time":20.969579162,"data":"    107         except Exception as err:\n"}
+,{"stream_name":"stderr","time":20.969583249,"data":"--\u003e 108             raise err from None\n"}
+,{"stream_name":"stderr","time":20.969587907,"data":"    109         finally:\n"}
+,{"stream_name":"stderr","time":20.969592352,"data":"    110             self.server.stop(0)\n"}
+,{"stream_name":"stderr","time":20.96959736,"data":"\n"}
+,{"stream_name":"stderr","time":20.969602236,"data":"/kaggle/input/nfl-big-data-bowl-2026-prediction/kaggle_evaluation/core/templates.py in run_local_gateway(self, data_paths, file_share_dir, *args, **kwargs)\n"}
+,{"stream_name":"stderr","time":20.969607532,"data":"    104         try:\n"}
+,{"stream_name":"stderr","time":20.969611927,"data":"    105             self.gateway = self._get_gateway_for_test(data_paths, file_share_dir, *args, **kwargs)\n"}
+,{"stream_name":"stderr","time":20.969616425,"data":"--\u003e 106             self.gateway.run()\n"}
+,{"stream_name":"stderr","time":20.969621042,"data":"    107         except Exception as err:\n"}
+,{"stream_name":"stderr","time":20.969625375,"data":"    108             raise err from None\n"}
+,{"stream_name":"stderr","time":20.969630192,"data":"\n"}
+,{"stream_name":"stderr","time":20.969634592,"data":"/kaggle/input/nfl-big-data-bowl-2026-prediction/kaggle_evaluation/core/base_gateway.py in run(self)\n"}
+,{"stream_name":"stderr","time":20.969639122,"data":"    149         elif error:\n"}
+,{"stream_name":"stderr","time":20.969643635,"data":"    150             # For local testing\n"}
+,{"stream_name":"stderr","time":20.969648058,"data":"--\u003e 151             raise error\n"}
+,{"stream_name":"stderr","time":20.969653445,"data":"    152 \n"}
+,{"stream_name":"stderr","time":20.969668171,"data":"    153     @final\n"}
+,{"stream_name":"stderr","time":20.969673045,"data":"\n"}
+,{"stream_name":"stderr","time":20.969678297,"data":"/kaggle/input/nfl-big-data-bowl-2026-prediction/kaggle_evaluation/core/base_gateway.py in run(self)\n"}
+,{"stream_name":"stderr","time":20.969683372,"data":"    130         try:\n"}
+,{"stream_name":"stderr","time":20.969688005,"data":"    131             self.unpack_data_paths()\n"}
+,{"stream_name":"stderr","time":20.969692787,"data":"--\u003e 132             predictions, row_ids = self.get_all_predictions()\n"}
+,{"stream_name":"stderr","time":20.969698046,"data":"    133             self.write_submission(predictions, row_ids)\n"}
+,{"stream_name":"stderr","time":20.969702908,"data":"    134         except GatewayRuntimeError as gre:\n"}
+,{"stream_name":"stderr","time":20.96970754,"data":"\n"}
+,{"stream_name":"stderr","time":20.969711787,"data":"/kaggle/input/nfl-big-data-bowl-2026-prediction/kaggle_evaluation/core/base_gateway.py in get_all_predictions(self)\n"}
+,{"stream_name":"stderr","time":20.969717298,"data":"    106         self.data_batch_counter = 0\n"}
+,{"stream_name":"stderr","time":20.969721766,"data":"    107         for data_batch, row_ids in self.generate_data_batches():\n"}
+,{"stream_name":"stderr","time":20.969726289,"data":"--\u003e 108             predictions = self.predict(*data_batch)\n"}
+,{"stream_name":"stderr","time":20.969729718,"data":"    109             self.competition_agnostic_validation(predictions, row_ids)\n"}
+,{"stream_name":"stderr","time":20.969732875,"data":"    110             self.competition_specific_validation(predictions, row_ids, data_batch)\n"}
+,{"stream_name":"stderr","time":20.969736155,"data":"\n"}
+,{"stream_name":"stderr","time":20.969738932,"data":"/kaggle/input/nfl-big-data-bowl-2026-prediction/kaggle_evaluation/core/base_gateway.py in predict(self, *args, **kwargs)\n"}
+,{"stream_name":"stderr","time":20.96974211,"data":"    124             return self.client.send('predict', *args, **kwargs)\n"}
+,{"stream_name":"stderr","time":20.969745171,"data":"    125         except Exception as e:\n"}
+,{"stream_name":"stderr","time":20.969748377,"data":"--\u003e 126             self.handle_server_error(e, 'predict')\n"}
+,{"stream_name":"stderr","time":20.969751467000002,"data":"    127 \n"}
+,{"stream_name":"stderr","time":20.969754496,"data":"    128     def run(self) -\u003e None:\n"}
+,{"stream_name":"stderr","time":20.969757656,"data":"\n"}
+,{"stream_name":"stderr","time":20.969760688,"data":"/kaggle/input/nfl-big-data-bowl-2026-prediction/kaggle_evaluation/core/base_gateway.py in handle_server_error(self, exception, endpoint)\n"}
+,{"stream_name":"stderr","time":20.969764022,"data":"    429             message_match = re.search('\"Exception calling application: (.*)\"', exception_str, re.IGNORECASE)\n"}
+,{"stream_name":"stderr","time":20.969767368,"data":"    430             message = message_match.group(1) if message_match else exception_str\n"}
+,{"stream_name":"stderr","time":20.96977039,"data":"--\u003e 431             raise GatewayRuntimeError(GatewayRuntimeErrorType.SERVER_RAISED_EXCEPTION, message) from None\n"}
+,{"stream_name":"stderr","time":20.969773663,"data":"    432         if isinstance(exception, grpc._channel._InactiveRpcError):\n"}
+,{"stream_name":"stderr","time":20.969776725,"data":"    433             raise GatewayRuntimeError(GatewayRuntimeErrorType.SERVER_CONNECTION_FAILED, exception_str) from None\n"}
+,{"stream_name":"stderr","time":20.969779867,"data":"\n"}
+,{"stream_name":"stderr","time":20.969782748,"data":"GatewayRuntimeError: (\u003cGatewayRuntimeErrorType.SERVER_RAISED_EXCEPTION: 3\u003e, \"\u003cclass 'numpy.random._pcg64.PCG64'\u003e is not a known BitGenerator module.\")\n"}
+,{"stream_name":"stderr","time":20.969789568,"data":"\n"}
+,{"stream_name":"stderr","time":25.349288138,"data":"/usr/local/lib/python3.11/dist-packages/traitlets/traitlets.py:2915: FutureWarning: --Exporter.preprocessors=[\"remove_papermill_header.RemovePapermillHeader\"] for containers is deprecated in traitlets 5.0. You can pass `--Exporter.preprocessors item` ... multiple times to add items to a list.\n"}
+,{"stream_name":"stderr","time":25.349337679,"data":"  warn(\n"}
+,{"stream_name":"stderr","time":25.409914868,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":25.791634937,"data":"[NbConvertApp] Writing 29763 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":29.336247095,"data":"/usr/local/lib/python3.11/dist-packages/traitlets/traitlets.py:2915: FutureWarning: --Exporter.preprocessors=[\"nbconvert.preprocessors.ExtractOutputPreprocessor\"] for containers is deprecated in traitlets 5.0. You can pass `--Exporter.preprocessors item` ... multiple times to add items to a list.\n"}
+,{"stream_name":"stderr","time":29.336291459,"data":"  warn(\n"}
+,{"stream_name":"stderr","time":29.373486524,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":30.452226874,"data":"[NbConvertApp] Writing 334027 bytes to __results__.html\n"}
+]
