@@ -1,5 +1,5 @@
 {
-  "id": "blazelaserblazer/nfl-model-v20251204-174944",
+  "id": "blazelaserblazer/nfl-model-v20251205-164901",
   "licenses": [
     {
       "name": "CC0-1.0"
@@ -11,8 +11,8 @@
       "description": "NFL BDB 2026 inference model package with submission notebook"
     }
   ],
-  "title": "nfl-model-v20251204-174944",
-  "subtitle": "NFL position prediction model - 2025-12-04 17:49:44",
+  "title": "nfl-model-v20251205-164901",
+  "subtitle": "NFL position prediction model - 2025-12-05 16:49:01",
   "keywords": [
     "nfl",
     "big-data-bowl",

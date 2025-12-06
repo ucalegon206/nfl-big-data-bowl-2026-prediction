@@ -1,0 +1,61 @@
+{
+  "timestamp": "20251206_111755",
+  "feature_columns": [
+    "x",
+    "y",
+    "s",
+    "a",
+    "dir_sin",
+    "dir_cos",
+    "num_frames_output",
+    "absolute_yardline_number",
+    "player_pos_code",
+    "dx_ball",
+    "dy_ball",
+    "dist_ball"
+  ],
+  "player_position_values": [
+    "SS",
+    "CB",
+    "WR",
+    "OLB",
+    "ILB",
+    "RB",
+    "TE",
+    "FS",
+    "MLB",
+    "DE",
+    "DT",
+    "FB",
+    "S",
+    "T",
+    "NT",
+    "QB",
+    "LB"
+  ],
+  "ensemble_weights": {
+    "lightgbm": 0.5,
+    "xgboost": 0.5
+  },
+  "model_files": {
+    "lgb_x": "lgb_model_x.txt",
+    "lgb_y": "lgb_model_y.txt",
+    "xgb_x": "xgb_model_x.json",
+    "xgb_y": "xgb_model_y.json"
+  },
+  "metrics": {
+    "lgb_rmse_x": 5.266390817792959,
+    "xgb_rmse_x": 5.134207475845491,
+    "ensemble_rmse_x": 5.171327623002889,
+    "lgb_rmse_y": 5.45970135501799,
+    "xgb_rmse_y": 5.3673002600223,
+    "ensemble_rmse_y": 5.3960145666211945,
+    "combined_rmse": 5.284865305171969
+  },
+  "model_info": {
+    "lgb_x_trees": 500,
+    "lgb_y_trees": 498,
+    "xgb_x_rounds": 500,
+    "xgb_y_rounds": 500
+  }
+}
