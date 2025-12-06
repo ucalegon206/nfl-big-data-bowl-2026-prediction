@@ -1,11 +1,11 @@
 {
-  "id": "blazelaserblazer/nfl-inference-20251204-174257",
-  "title": "nfl-inference-20251204-174257",
+  "id": "blazelaserblazer/nfl-inference-20251204-174944",
+  "title": "nfl-inference-20251204-174944",
   "code_file": "submission_notebook.ipynb",
   "language": "python",
   "kernel_type": "notebook",
   "dataset_sources": [
-    "blazelaserblazer/nfl-model-v20251204-174257"
+    "blazelaserblazer/nfl-model-v20251204-174944"
   ],
   "competition_sources": [
     "nfl-big-data-bowl-2026-prediction"
