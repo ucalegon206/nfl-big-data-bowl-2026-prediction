@@ -5,7 +5,7 @@
   "language": "python",
   "kernel_type": "notebook",
   "dataset_sources": [
-    "blazelaserblazer/nfl-model-v20251205-164901"
+    "blazelaserblazer/nfl-ensemble-v20251206-111755"
   ],
   "competition_sources": [
     "nfl-big-data-bowl-2026-prediction"
